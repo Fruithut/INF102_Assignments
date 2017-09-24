@@ -1,5 +1,3 @@
-import com.sun.deploy.util.ArrayUtil;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,6 +13,7 @@ public class exactTriplicates {
         Collections.sort(listB);
         Collections.sort(listC);
         Collections.sort(listD);
+        
         String candidateOne = null, candidateTwo = null;
         boolean A, B, C, D;
         
@@ -54,7 +53,7 @@ public class exactTriplicates {
         else if (candidateOne == null) return candidateTwo;
         else if (candidateTwo == null) return candidateOne;
         
-        if (candidateOne.compareTo(candidateTwo) < 0) return candidateTwo;
+        if (candidateOne.compareTo(candidateTwo) > 0) return candidateTwo;
         return candidateOne;
     }
 
