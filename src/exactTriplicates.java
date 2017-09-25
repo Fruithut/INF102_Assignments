@@ -6,7 +6,20 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A class to determine if there is 'exactly' 3 equal names (triplicates) given 4 lists of size N
+ * Made by Olav Gjerde (ogj005)
+ */
 public class exactTriplicates {
+
+    /**
+     * Uses mergesort in combination with binarysearch to look for triplicates in the 4 lists of random names.
+     * @param listA
+     * @param listB
+     * @param listC
+     * @param listD
+     * @return the lexiographically first triplicate if any
+     */
     private static String findName(List<String> listA, List<String> listB, List<String> listC, List<String> listD) {
         //Mergesort lists <= N log N
         Collections.sort(listA);
@@ -57,6 +70,10 @@ public class exactTriplicates {
         return candidateOne;
     }
 
+    /**
+     * Reads input from 4 txt files packages alongside this class
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             List<String> list1 = Files.readAllLines(Paths.get("listA.txt"));

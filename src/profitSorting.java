@@ -1,51 +1,60 @@
 import edu.princeton.cs.algs4.BinarySearch;
-import edu.princeton.cs.algs4.Merge;
 import edu.princeton.cs.algs4.Stopwatch;
-
-import java.security.PublicKey;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
+/**
+ * Simple class for comparing linear searches against mergesort followed by binary searches
+ * Made by Olav Gjerde (ogj005)
+ */
 public class profitSorting {
     private static Random numGen = new Random();
-    private static final int SIZE = (int) Math.pow(10.0,6.0);
-    
+    private static final int N = 10 *(int) Math.pow(10.0,6.0);
+
+    /**
+     * Generate a array with random integers
+     * @return a list of size N with random integers from 0
+     * to "Integer.MAX_VALUE"
+     */
     private static int[] listGen(){
-        int[] numbers = new int[SIZE];
-        for (int i = 0; i < SIZE; i++) {
+        int[] numbers = new int[N];
+        for (int i = 0; i < N; i++) {
             numbers[i] = numGen.nextInt(Integer.MAX_VALUE);
         }
         return numbers;
     }
-    
-    //unsorted linear-search
+
+    /**
+     * Unsorted linear-search
+     * @param trials how many times to search an array
+     * @return time used for all trials
+     */
     private static double linearSearch(int trials){
         int[] numList = listGen();
         Stopwatch timeCounter = new Stopwatch();
-        
         for (int i = 0; i < trials; i++) {
             for (Integer value : numList) {
-                if (value == numGen.nextInt(300000)) {
-                    //System.out.println("LinearPos: " + value);
+                if (value == numGen.nextInt(Integer.MAX_VALUE)) {
+                    System.out.println("LinearPos: " + value);
                     break;
                 }
             }
         }
-        
         return timeCounter.elapsedTime();
     }
-    
-    //quick-sort then binary search
+
+    /**
+     * Mergesort of array followed på N trials of binarysearch
+     * @param trials how many times to search an array
+     * @return time used for all trials
+     */
     private static double binarySearch(int trials){
         int[] numList = listGen();
         Stopwatch timeCounter = new Stopwatch();
-        Arrays.sort(numList);
+        MergeX.sort(numList);
         
         for (int i = 0; i < trials; i++) {
-            //System.out.println("BinaryPos: " + BinarySearch.indexOf(numList,numGen.nextInt(300000)));
-            BinarySearch.indexOf(numList,numGen.nextInt(300000));
+            System.out.println("BinaryPos: " + BinarySearch.indexOf(numList,numGen.nextInt(Integer.MAX_VALUE)));
+            //BinarySearch.indexOf(numList,numGen.nextInt(Integer.MAX_VALUE));
         }
         
         return timeCounter.elapsedTime();

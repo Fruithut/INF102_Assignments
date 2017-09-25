@@ -3,7 +3,17 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+/**
+ * Class to represent the forwards and backwards function that is present
+ * in most modern browsers
+ */
 public class siteBrowser {
+
+    /**
+     * Simulates browsing with the use of two stacks
+     * @param N length of input (not used in this implementation)
+     * @param input a list of commands to be handled in this method
+     */
     private static void browse(int N, List<String> input) {
         //remove index number
         input.remove(0);
@@ -31,7 +41,11 @@ public class siteBrowser {
             }
         }
     }
-    
+
+    /**
+     * Read commands from a txt file packaged with this class
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             List<String> list = Files.readAllLines(Paths.get("browseInput.txt"));
