@@ -18,7 +18,7 @@ public class profitSorting {
     private static int[] listGen(){
         int[] numbers = new int[N];
         for (int i = 0; i < N; i++) {
-            numbers[i] = numGen.nextInt(Integer.MAX_VALUE);
+            numbers[i] = numGen.nextInt(N);
         }
         return numbers;
     }
@@ -33,7 +33,7 @@ public class profitSorting {
         Stopwatch timeCounter = new Stopwatch();
         for (int i = 0; i < trials; i++) {
             for (Integer value : numList) {
-                if (value == numGen.nextInt(Integer.MAX_VALUE)) {
+                if (value == numGen.nextInt(N)) {
                     System.out.println("LinearPos: " + value);
                     break;
                 }
@@ -53,15 +53,15 @@ public class profitSorting {
         MergeX.sort(numList);
         
         for (int i = 0; i < trials; i++) {
-            System.out.println("BinaryPos: " + BinarySearch.indexOf(numList,numGen.nextInt(Integer.MAX_VALUE)));
-            //BinarySearch.indexOf(numList,numGen.nextInt(Integer.MAX_VALUE));
+            System.out.println("BinaryPos: " + BinarySearch.indexOf(numList,numGen.nextInt(N)));
+            //BinarySearch.indexOf(numList,numGen.nextInt(N*2));
         }
         
         return timeCounter.elapsedTime();
     }
     
     public static void main(String[] args) {
-        System.out.println("LinearSearch-time: " + linearSearch(11));
-        System.out.println("BinarySearch-time: " + binarySearch(11));
+        System.out.println("LinearSearch-time: " + linearSearch(14));
+        System.out.println("BinarySearch-time: " + binarySearch(14));
     }
 }
