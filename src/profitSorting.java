@@ -13,27 +13,28 @@ public class profitSorting {
     /**
      * Generate a array with random integers
      * @return a list of size N with random integers from 0
-     * to "Integer.MAX_VALUE"
+     * to "bounds"
      */
-    private static int[] listGen(){
-        int[] numbers = new int[N];
-        for (int i = 0; i < N; i++) {
-            numbers[i] = numGen.nextInt(N);
+    private static int[] listGen(int size, int bounds){
+        int[] numbers = new int[size];
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = numGen.nextInt(bounds);
         }
         return numbers;
     }
 
     /**
      * Unsorted linear-search
-     * @param trials how many times to search an array
-     * @return time used for all trials
+     * @param trials number of times to search
+     * @param numArray Array to search in
+     * @param keyArray Values to search for
+     * @return time used for all searches
      */
-    private static double linearSearch(int trials){
-        int[] numList = listGen();
+    private static double linearSearch(int trials, int[] numArray, int[] keyArray){
         Stopwatch timeCounter = new Stopwatch();
         for (int i = 0; i < trials; i++) {
-            for (Integer value : numList) {
-                if (value == numGen.nextInt(N)) {
+            for (int value : numArray) {
+                if (value == keyArray[i]) {
                     System.out.println("LinearPos: " + value);
                     break;
                 }
@@ -41,27 +42,30 @@ public class profitSorting {
         }
         return timeCounter.elapsedTime();
     }
-
+    
     /**
-     * Mergesort of array followed på N trials of binarysearch
-     * @param trials how many times to search an array
-     * @return time used for all trials
+     * Mergesort of an array followed på N trials of binary-search
+     * @param trials number of times to search
+     * @param numArray Array to search in
+     * @param keyArray Values to search for
+     * @return time used for all searches
      */
-    private static double binarySearch(int trials){
-        int[] numList = listGen();
+    private static double binarySearch(int trials , int[] numArray, int[] keyArray){
         Stopwatch timeCounter = new Stopwatch();
-        MergeX.sort(numList);
-        
+        MergeX.sort(numArray);
         for (int i = 0; i < trials; i++) {
-            System.out.println("BinaryPos: " + BinarySearch.indexOf(numList,numGen.nextInt(N)));
-            //BinarySearch.indexOf(numList,numGen.nextInt(N*2));
+            System.out.println("BinaryPos: " + BinarySearch.indexOf(numArray, keyArray[i]));
         }
-        
         return timeCounter.elapsedTime();
     }
     
     public static void main(String[] args) {
-        System.out.println("LinearSearch-time: " + linearSearch(14));
-        System.out.println("BinarySearch-time: " + binarySearch(14));
+        int trials = 259;
+        int[] numList = listGen(N, (N));
+        int[] keyList = listGen(trials, (int) (N*1.5));
+        //do linear search first so the list doest get sorted before linear search takes place
+        double lTime = linearSearch(trials, numList, keyList);
+        double bTime = binarySearch(trials, numList, keyList);
+        System.out.println("LinearSearch-time: " + lTime + "\n" + "BinarySearch-time: " + bTime);
     }
 }
