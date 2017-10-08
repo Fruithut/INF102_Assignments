@@ -1,0 +1,9 @@
+Task 1. Very good!
+Task 2. Very good!
+Task 3. Good and detailed answer in hand-in. Also either one of you implementations
+	would pass this task, very good.
+Task 4. Very good! Nice to see that you wrote your own mergesort, though the java standard
+	collections.sort would be enough. Good answer in hand-in.
+
+Good job! A very clear PASS.
+
