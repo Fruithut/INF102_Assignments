@@ -70,22 +70,11 @@ public class ConnectingToiletsTest {
         Set<Edge> result = ConnectingToilets.connectToilets(toiletSet);
         assertEquals("Minimum length for Bergen should be", 1069.628417717744, resultLength(result), 0.1);
     }
-
-    /**
-     * The original code ended up with a faulty calculation, simple version below seems to fix it
-     * @param result a set of edges to calculate total length from
-     * @return the total length of all the edges
-     */
+    
     private double resultLength(Set<Edge> result) {
-        double totalLength = 0;
-        for (Edge x : result) {
-            totalLength += x.getLength();
-        }
-        return totalLength;
-        //replaced code
-        /*return result.stream()
+        return result.stream()
                 .mapToDouble(Edge::getLength)
-                .sum();*/
+                .sum();
     }
 
 }
