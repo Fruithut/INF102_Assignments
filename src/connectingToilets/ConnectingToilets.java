@@ -18,19 +18,20 @@ import java.util.stream.Collectors;
  * objects presented from input using the least amount of "pipes" (min. length)
  */
 public class ConnectingToilets {
-
-    private final static String TOILET_FILE = "connectingToilets/bergen_toilet_map.txt";
+    //NB: Original code would the program run a scan of this file for each run of the class
+    //including testing. Changed this to regular input.
+    //private final static String TOILET_FILE = "connectingToilets/random_toilet_map.txt";
 
     public static void main(String[] args) {
-        Set<Toilet> toilets = readToiletsFromFile(TOILET_FILE);
+        Set<Toilet> toilets = readToiletsFromFile(args[0]);
         ToiletMap mapOfToilets = new ToiletMap(toilets, connectToilets(toilets));
         Svg.runSVG(Svg.buildSvgFromScienceEmployees(mapOfToilets));
     }
 
     static Set<Toilet> readToiletsFromFile(String toiletFile) {
-        List<String> lines = readLines(TOILET_FILE);
+        List<String> lines = readLines(toiletFile);
         if (lines == null) {
-            System.out.print("An error ocurred trying to read " + TOILET_FILE + ". Check that the file exist.");
+            System.out.print("An error ocurred trying to read " + toiletFile + ". Check that the file exist.");
         }
         return lines.stream().map(ConnectingToilets::lineToToilet).collect(Collectors.toSet());
     }
@@ -42,36 +43,37 @@ public class ConnectingToilets {
      * Prim's algorithm is used to find a minimum spanning tree on the
      * graph constructed earlier, this gives us all the edges that will
      * connect the toilet objects with the minimum amount of "length".
+     * NB: this implementation may no be effective considering all the
+     * mapping from one "object" implementation to another.. (works for
+     * reasonable input sizes)
      *
      * @param toilets a set of all toilets which one wants to connect
      * @return edges to connect "toilet" objects
      */
     static Set<Edge> connectToilets(Set<Toilet> toilets) {
-        HashMap<Toilet, Integer> toiletToInteger = new HashMap<>();
-        HashMap<Integer, Toilet> integerToToilet = new HashMap<>();
+        List<Toilet> allToilets = new ArrayList<>();
+        allToilets.addAll(toilets);
 
         //constructs a bidirectional "hashmap"-structure
+        HashMap<Toilet, Integer> toiletToInteger = new HashMap<>();
+        HashMap<Integer, Toilet> integerToToilet = new HashMap<>();
         int intRepresentation = 0;
         for (Toilet x : toilets) {
             toiletToInteger.put(x, intRepresentation);
             integerToToilet.put(intRepresentation, x);
             intRepresentation++;
         }
-        //construct all possible edges
-        ArrayList<Edge> allEdges = new ArrayList<>();
-        for (Toilet i : toilets) {
-            for (Toilet j : toilets) {
-                if (i.equals(j)) break;
-                allEdges.add(new Edge(i, j, euclideanDistance(i, j)));
-            }
-        }
+
         //add all toilet-edges with corresponding "length/weight" to a edge weighted graph
         EdgeWeightedGraph wGraph = new EdgeWeightedGraph(toilets.size());
-        for (Edge toiletEdge : allEdges) {
-            int aVertex = toiletToInteger.get(toiletEdge.getToiletA());
-            int bVertex = toiletToInteger.get(toiletEdge.getToiletB());
-            double weight = toiletEdge.getLength();
-            wGraph.addEdge(new edu.princeton.cs.algs4.Edge(aVertex, bVertex, weight));
+        for (int i = 0; i < allToilets.size(); i++) {
+            for (int j = i+1; j < allToilets.size(); j++) {
+                Toilet x = allToilets.get(i);
+                Toilet y = allToilets.get(j);
+                int xInt = toiletToInteger.get(x);
+                int yInt = toiletToInteger.get(y);
+                wGraph.addEdge(new edu.princeton.cs.algs4.Edge(xInt, yInt, euclideanDistance(x,y)));
+            }
         }
         //find the edges that connect all toilets with the minimum amount of "length/weight"
         PrimMST minSpanningTree = new PrimMST(wGraph);
@@ -120,5 +122,4 @@ public class ConnectingToilets {
             return null;
         }
     }
-
 }

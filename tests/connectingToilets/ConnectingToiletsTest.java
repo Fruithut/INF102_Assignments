@@ -66,7 +66,7 @@ public class ConnectingToiletsTest {
 
     @Test
     public void testForBergen() {
-        Set<Toilet> toiletSet = ConnectingToilets.readToiletsFromFile("connectingToilets");
+        Set<Toilet> toiletSet = ConnectingToilets.readToiletsFromFile("connectingToilets/bergen_toilet_map.txt");
         Set<Edge> result = ConnectingToilets.connectToilets(toiletSet);
         assertEquals("Minimum length for Bergen should be", 1069.628417717744, resultLength(result), 0.1);
     }
