@@ -1,7 +1,11 @@
 package tree;
 
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.Graph;
+import edu.princeton.cs.algs4.In;
 
+/**
+ * Created by Olav Gjerde 01.11.2017
+ */
 public class PrintTree {
     private static String[] itemArray;
     private static boolean[] marked, written;
@@ -17,10 +21,11 @@ public class PrintTree {
     /**
      * Reads input from string, and construct a graph to connect
      * the different items.
+     *
      * @param inputContent string with hierarchy-description of items
      * @return a string with the hierarchy indented
      */
-    public static String formatStringToTree(String inputContent) {
+    static String formatStringToTree(String inputContent) {
         String[] lines = inputContent.split("\n");
         int itemNum = Integer.parseInt(lines[0].trim());
         itemArray = lines[1].split(" ");
@@ -36,7 +41,7 @@ public class PrintTree {
                 graph.addEdge(vertex, connectTo);
             }
         }
-        
+
         //keep track of which items haven been visited 
         //and which have already been printed
         marked = new boolean[graph.V()];
@@ -49,23 +54,23 @@ public class PrintTree {
      * A modified depth first search on a graph, uses a
      * counter to keep track of how deep the search is
      * and then indents the print of a vertex accordingly
-     * 
+     *
      * @param G A graph with "relations constructed"
      * @param v Vertex to start search from
      * @return a hierarchy of the elements in the graph
      */
     private static String modDepthFirstSearch(Graph G, int v) {
         marked[v] = true;
-        
-        //example root contains folder1; go to folder1 print sub-elements, don't print "folder1" again
+
+        //example: root contains folder1; go to folder1 print sub-elements, don't print "folder1" again
         //also handles 1 element input edge-case
         if (!written[v]) result.append("'-").append(itemArray[v]).append("\n");
         for (int w : G.adj(v)) {
             if (!marked[w]) {
                 depth++;
-                
+
                 written[w] = true;
-                int indentationSize = 2*depth;
+                int indentationSize = 2 * depth;
                 for (int i = 0; i < indentationSize; i++) {
                     result.append(" ");
                 }

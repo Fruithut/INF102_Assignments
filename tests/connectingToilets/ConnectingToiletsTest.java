@@ -1,6 +1,5 @@
 package connectingToilets;
 
-
 import org.junit.Test;
 
 import java.util.HashSet;
@@ -10,9 +9,9 @@ import java.util.stream.Stream;
 
 import static junit.framework.TestCase.assertEquals;
 
-
 /**
  * Created by knutandersstokke on 28 28.10.2017.
+ * Edited by Olav Gjerde on 03.11.2017.
  */
 public class ConnectingToiletsTest {
 
@@ -72,10 +71,21 @@ public class ConnectingToiletsTest {
         assertEquals("Minimum length for Bergen should be", 1069.628417717744, resultLength(result), 0.1);
     }
 
+    /**
+     * The original code ended up with a faulty calculation, simple version below seems to fix it
+     * @param result a set of edges to calculate total length from
+     * @return the total length of all the edges
+     */
     private double resultLength(Set<Edge> result) {
-        return result.stream()
+        double totalLength = 0;
+        for (Edge x : result) {
+            totalLength += x.getLength();
+        }
+        return totalLength;
+        //replaced code
+        /*return result.stream()
                 .mapToDouble(Edge::getLength)
-                .sum();
+                .sum();*/
     }
 
 }
