@@ -7,10 +7,10 @@ import edu.princeton.cs.algs4.In;
  * Created by Olav Gjerde 01.11.2017
  */
 public class PrintTree {
-    private static String[] itemArray;
+    private static String[] itemNames;
     private static boolean[] marked, written;
-    private static int depth = 0;
-    private static StringBuilder result = new StringBuilder();
+    private static int searchDepth = 0;
+    private static StringBuilder treeHierarchy = new StringBuilder();
 
     public static void main(String[] args) {
         String inputFile = args[0];
@@ -26,32 +26,29 @@ public class PrintTree {
      * @return a string with the hierarchy indented
      */
     static String formatStringToTree(String inputContent) {
-        String[] lines = inputContent.split("\n");
+        String[] lines = inputContent.split(System.lineSeparator());
         int itemNum = Integer.parseInt(lines[0].trim());
-        itemArray = lines[1].split(" ");
+        itemNames = lines[1].split(" ");
 
         Graph graph = new Graph(itemNum);
         for (int i = 2; i < lines.length; i++) {
-            String content = lines[i].replaceAll(" ", "");
-            content = content.replaceAll(":", "").trim();
-            int vertex = Integer.parseInt(String.valueOf(content.charAt(0)));
-
-            for (int j = 1; j < content.length(); j++) {
-                int connectTo = Integer.parseInt(String.valueOf(content.charAt(j)).trim());
-                graph.addEdge(vertex, connectTo);
+            String[] content = lines[i].split(" ");
+            int vertex = Integer.parseInt(content[0]);
+            
+            for (int j = 2; j < content.length; j++) {
+                graph.addEdge(vertex, Integer.parseInt(content[j]));
             }
         }
 
-        //keep track of which items haven been visited 
-        //and which have already been printed
+        //keep track of which items haven been visited, and which have already been written
         marked = new boolean[graph.V()];
         written = new boolean[graph.V()];
-
+        
         return modDepthFirstSearch(graph, 0);
     }
 
     /**
-     * A modified depth first search on a graph, uses a
+     * A modified searchDepth first search on a graph, uses a
      * counter to keep track of how deep the search is
      * and then indents the print of a vertex accordingly
      *
@@ -61,25 +58,22 @@ public class PrintTree {
      */
     private static String modDepthFirstSearch(Graph G, int v) {
         marked[v] = true;
-
         //example: root contains folder1; go to folder1 print sub-elements, don't print "folder1" again
         //also handles 1 element input edge-case
-        if (!written[v]) result.append("'-").append(itemArray[v]).append("\n");
+        if (!written[v]) treeHierarchy.append("'-").append(itemNames[v]).append(System.lineSeparator());
         for (int w : G.adj(v)) {
             if (!marked[w]) {
-                depth++;
-
+                searchDepth++;
+                
+                for (int i = 0; i < 2 * searchDepth; i++) treeHierarchy.append(" ");
+                treeHierarchy.append("'-").append(itemNames[w]).append(System.lineSeparator());
                 written[w] = true;
-                int indentationSize = 2 * depth;
-                for (int i = 0; i < indentationSize; i++) {
-                    result.append(" ");
-                }
-                result.append("'-").append(itemArray[w]).append("\n");
-
+                
                 modDepthFirstSearch(G, w);
-                depth--;
+                searchDepth--;
             }
         }
-        return result.toString().trim();
+        return treeHierarchy.toString().trim();
     }
+    
 }

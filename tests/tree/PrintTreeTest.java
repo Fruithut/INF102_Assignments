@@ -8,12 +8,10 @@ import static org.junit.Assert.*;
 /**
  * Created by knutandersstokke on 28 28.10.2017.
  * 
- * Modified: Just tabbed out one of the test, they end up equal in ("click to see difference"),
- * but the end of line sign may be different CRLF/LF
+ * Running both test after eachother in one run fails, but executing them individually works fine.
  */
 public class PrintTreeTest {
     
-    //fails but shows same text in comparison
     /*@Test
     public void testExampleTree() {
         testTree("smallTree");
