@@ -48,7 +48,7 @@ public class siteBrowser {
      */
     public static void main(String[] args) {
         try {
-            List<String> list = Files.readAllLines(Paths.get("browseInput.txt"));
+            List<String> list = Files.readAllLines(Paths.get("res/browseInput.txt"));
             browse(Integer.parseInt(list.get(0)), list);
         } catch (IOException e) {
             e.printStackTrace();

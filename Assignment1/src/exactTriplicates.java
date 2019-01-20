@@ -14,10 +14,7 @@ public class exactTriplicates {
 
     /**
      * Uses mergesort in combination with binarysearch to look for triplicates in the 4 lists of random names.
-     * @param listA
-     * @param listB
-     * @param listC
-     * @param listD
+     *
      * @return the lexiographically first triplicate if any
      */
     private static String findName(List<String> listA, List<String> listB, List<String> listC, List<String> listD) {
@@ -76,10 +73,10 @@ public class exactTriplicates {
      */
     public static void main(String[] args) {
         try {
-            List<String> list1 = Files.readAllLines(Paths.get("listA.txt"));
-            List<String> list2 = Files.readAllLines(Paths.get("listB.txt"));
-            List<String> list3 = Files.readAllLines(Paths.get("listC.txt"));
-            List<String> list4 = Files.readAllLines(Paths.get("listD.txt"));
+            List<String> list1 = Files.readAllLines(Paths.get("res/listA.txt"));
+            List<String> list2 = Files.readAllLines(Paths.get("res/listB.txt"));
+            List<String> list3 = Files.readAllLines(Paths.get("res/listC.txt"));
+            List<String> list4 = Files.readAllLines(Paths.get("res/listD.txt"));
             String name = findName(list1, list2, list3, list4);
             System.out.println("Triplicate: " + name);
         } catch (IOException e) {
