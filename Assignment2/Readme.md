@@ -41,7 +41,7 @@ used and a list of all the disks. For each disk print all the file sizes of the 
 written to the disk. E.g. if the input consists of 500MB, 100MB, 500MB and 600MB, then
 the first solution would give:  
 
-3
+3  
 Disk 1 : [ 500MB, 100MB ]  
 Disk 2 : [ 500MB ]  
 Disk 3 : [ 600MB ]  
